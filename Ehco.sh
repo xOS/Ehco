@@ -296,8 +296,8 @@ start_menu(){
 ${green}1.${plain} 安装 Ehco
 ${green}2.${plain} 更新 Ehco
 ${green}3.${plain} 卸载 Ehco
-${green}4.${plain} 配置落地机器
-${green}5.${plain} 配置中转机器
+${green}4.${plain} 配置落地机
+${green}5.${plain} 配置中转机
 ${green}6.${plain} 永久关闭
 ${green}8.${plain} 重新启用
 ${green}7.${plain} 重启 Ehco
