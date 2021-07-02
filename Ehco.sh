@@ -218,7 +218,7 @@ check_pid(){
 
 #更新 Ehco
 Update_Ehco(){
-    new_ver=$(wget -qO- https://api.github.com/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g')
+    new_ver=$(wget -qO- https://api.github.com/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
 	now_ver=$(cat ${now_ver_file})
 	if [[ "${now_ver}" != "${new_ver}" ]]; then
 		echo -e "${Info} 发现 Ehco 已有新版本 [ ${new_ver} ]，旧版本 [ ${now_ver} ]"
@@ -228,11 +228,11 @@ Update_Ehco(){
 			check_pid
 			[[ ! -z $PID ]] && kill -9 ${PID}
 			if [[ ${bit} == "x86_64" ]]; then
-  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/${new_ver}/ehco_${new_ver}_linux_amd64" -O ehco && chmod +x ehco && mv -f ehco /usr/local/bin/ehco 
+  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${new_ver}/ehco_${new_ver}_linux_amd64" -O ehco && chmod +x ehco && mv -f ehco /usr/local/bin/ehco 
   	echo "${new_ver}" > ${now_ver_file}
 	fi
 	if [[ ${bit} == "aarch64" ]]; then
-  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/${new_ver}/ehco_${new_ver}_linux_arm64" -O ehco && chmod +x ehco && mv -f ehco /usr/local/bin/ehco 
+  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${new_ver}/ehco_${new_ver}_linux_arm64" -O ehco && chmod +x ehco && mv -f ehco /usr/local/bin/ehco 
   	echo "${new_ver}" > ${now_ver_file}
 	fi
             echo -e "-------${Green_font_prefix} Ehco 更新成功! ${Font_color_suffix}-------"
@@ -252,14 +252,14 @@ Update_Ehco(){
 Install_Ehco(){
 if [ ! -f "/usr/bin/ehco" ]; then
 	echo -e "现在开始安装Ehco"
-	new_ver=$(wget -qO- https://api.github.com/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g')
+	new_ver=$(wget -qO- https://api.github.com/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
   	mkdir /etc/ehco
 	if [[ ${bit} == "x86_64" ]]; then
-  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/${new_ver}/ehco_${new_ver}_linux_amd64" -O ehco && chmod +x ehco && mv ehco /usr/local/bin/ehco 
+  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${new_ver}/ehco_${new_ver}_linux_amd64" -O ehco && chmod +x ehco && mv ehco /usr/local/bin/ehco 
   	echo "${new_ver}" > ${now_ver_file}
 	fi
 	if [[ ${bit} == "aarch64" ]]; then
-  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/${new_ver}/ehco_${new_ver}_linux_arm64" -O ehco && chmod +x ehco && mv ehco /usr/local/bin/ehco 
+  	wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${new_ver}/ehco_${new_ver}_linux_arm64" -O ehco && chmod +x ehco && mv ehco /usr/local/bin/ehco 
   	echo "${new_ver}" > ${now_ver_file}
 	fi
 fi
@@ -296,8 +296,8 @@ start_menu(){
 ${green}1.${plain} 安装 Ehco
 ${green}2.${plain} 更新 Ehco
 ${green}3.${plain} 卸载 Ehco
-${green}4.${plain} 配置落地机
-${green}5.${plain} 配置中转机
+${green}4.${plain} 配置中转机
+${green}5.${plain} 配置落地机
 ${green}6.${plain} 永久关闭
 ${green}8.${plain} 重新启用
 ${green}7.${plain} 重启 Ehco
@@ -316,10 +316,10 @@ ${green}0.${plain} 退出脚本
 		Uninstall_Ehco
 		;;
 	4)
-		Landing_Config
+		Forward_Config
 		;;
 	5)
-		Forward_Config
+		Landing_Config
 		;;
 	6)
 		systemctl stop ehco.service
