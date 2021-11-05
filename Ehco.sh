@@ -214,7 +214,7 @@ WantedBy=multi-user.target' > ehco.service
 
 #获取 Ehco 进程 ID
 check_pid(){
-	PID=$(ps -ef| grep "ehco"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
+	PID=$(ps -ef| grep "ehco"| awk '{print $2}')
 }
 
 #更新 Ehco
